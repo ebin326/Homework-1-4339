@@ -1,4 +1,4 @@
-<script src=""></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@3.2.31/dist/vue.global.prod.js"></script>
 
 <form v-cloak>
     <h1>Facilities</h1>
@@ -6,16 +6,16 @@
     <ul>
         <!-- Loop through the facilities array, assign a click handler, and set or
              remove the "active" css class if needed -->
-        <li v-for="" v-on:click="" v-bind:class="">
+        <li v-for="facility in facilities" v-on:click="toggleActive(facility)" v-bind:class="{ 'active': facility.active }">
             <!-- Display the name and price for every entry in the array .
                 Use the formatCurrency method for formatting the price -->
-            {{}} <span>{{}}</span>
+            {{ facility.name }} <span>{{ formatCurrency(facility.price) }}</span>
         </li>
     </ul>
 
     <div class="total">
-        <!-- Calculate the total price of all chosen facililtys. Format it as currency using formatCurrency. -->
-        Total: <span></span>
+        <!-- Calculate the total price of all chosen facilities. Format it as currency using formatCurrency. -->
+        Total: <span>{{ formatCurrency(total()) }}</span>
     </div>
 
 </form>
@@ -55,26 +55,26 @@
         // method to calculate the total amount
         total: function(){
             // variable to hold total
-            var total;
+            var total = 0;
 
             //loop through facilities
-            //
+            this.facilities.forEach(function(facility) {
                 //check whether item is active
-                //
+                if (facility.active) {
                     //sum up for total
-                    //
-                //
-            //
+                    total += facility.price;
+                }
+            });
 
            return total;
         },
         // method to format as currency
         formatCurrency(value) {
-            // put dollar sign in front of value and show 2 deci,al places e.g $500.00
-            return value;
-  }
+            // put dollar sign in front of value and show 2 decimal places e.g $500.00
+            return '$' + value.toFixed(2);
+        }
     }
-  }).mount('#main')
+  }).mount('form')
 </script>
 
 <style>
@@ -172,4 +172,3 @@ div.total span{
 }
 
 </style>
-
